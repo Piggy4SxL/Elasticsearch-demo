@@ -1,6 +1,5 @@
 package com.oc.elastic.util;
 
-import com.oc.elastic.entity.House;
 import com.oc.elastic.vo.HouseVO;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -8,6 +7,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.util.List;
 
 /**
  * @author SxL
@@ -115,18 +115,15 @@ public class BeanUtils {
         return sb.toString().toUpperCase();
     }
 
-    public static void main(String[] args) {
-        House house = new House();
-        house.setBed_type("text");
-
-        HouseVO houseVO = new HouseVO();
-
-        try {
+    public static void turnToVo(List<Object> houseList, List<Object> houseVOList) throws Exception {
+        for (Object house : houseList) {
+            HouseVO houseVO = new HouseVO();
             copyBeanToCamelNaming(house, houseVO);
-        } catch (Exception e) {
-            e.printStackTrace();
+            houseVOList.add(houseVO);
         }
+    }
 
-        System.out.println(ToStringBuilder.reflectionToString(houseVO, ToStringStyle.JSON_STYLE));
+    public static String toString(Object object) {
+        return ToStringBuilder.reflectionToString(object, ToStringStyle.JSON_STYLE);
     }
 }
